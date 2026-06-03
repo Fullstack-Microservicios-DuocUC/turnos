@@ -20,7 +20,7 @@ public class ExternalUsuarioService {
 
             return existe != null && existe;
         } catch (Exception e) {
-            System.out.println("⚠️ [Turnos] Sin conexión con Usuarios (8081). Fallback de desarrollo activo.");
+            System.out.println("[Turnos] Sin conexión con Usuarios (8081). Fallback de desarrollo activo.");
             return true; 
         }
     }
