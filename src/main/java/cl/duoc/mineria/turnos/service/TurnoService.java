@@ -1,6 +1,7 @@
 package cl.duoc.mineria.turnos.service;
 
 import cl.duoc.mineria.turnos.dto.AbrirTurnoDTO;
+import cl.duoc.mineria.turnos.exception.TurnoNotFoundException;
 import cl.duoc.mineria.turnos.exception.UsuarioNotFoundException;
 import cl.duoc.mineria.turnos.mapper.TurnoMapper;
 import cl.duoc.mineria.turnos.model.EstadoTurno;
@@ -31,10 +32,10 @@ public class TurnoService {
         return turnoRepository.save(nuevoTurno);
     }
 
-    @Transactional // Sin readOnly=true para que guarde el UPDATE en Neon Tech
+    @Transactional
     public Turno finalizarTurno(Long id) {
         Turno turno = turnoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Turno no encontrado con ID: " + id));
+            .orElseThrow(() -> new TurnoNotFoundException("El turno con ID " + id + " no existe en los registros."));
 
         turno.setFechaHoraFin(LocalDateTime.now());
         turno.setEstado(EstadoTurno.FINALIZADO);
